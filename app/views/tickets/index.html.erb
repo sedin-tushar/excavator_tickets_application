@@ -1,0 +1,55 @@
+<head>
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+thead th {
+  background-color: #f2f2f2;
+}
+
+th a {
+  display: block;
+  color: #000;
+  text-decoration: none;
+}
+
+th a:hover {
+  text-decoration: underline;
+}
+
+td:first-child {
+  padding-left: 20px;
+}
+</style>
+</head>
+<h1>Tickets</h1>
+
+<table id="tickets-table" class="sortable">
+  <thead>
+    <tr>
+      <th>Request Number</th>
+      <th>Sequence Number</th>
+      <th>Request Type</th>
+      <th>Primary Service Area Code</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tickets.each do |ticket| %>
+      <tr>
+        <td><%= link_to ticket.request_number, ticket_path(ticket) %></td>
+        <td><%= ticket.sequence_number %></td>
+        <td><%= ticket.request_type %></td>
+        <td><%= ticket.sacode %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

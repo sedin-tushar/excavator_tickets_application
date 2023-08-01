@@ -1,0 +1,115 @@
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    #digsite-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #digsite-table th, #digsite-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    #digsite-table th {
+      background-color: #f2f2f2;
+    }
+
+    #map {
+      height: 500px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<h1>Ticket Details</h1>
+
+<table>
+  <tr>
+    <td><strong>Request Number:</strong></td>
+    <td><%= @ticket.request_number %></td>
+  </tr>
+  <tr>
+    <td><strong>Sequence Number:</strong></td>
+    <td><%= @ticket.sequence_number %></td>
+  </tr>
+  <tr>
+    <td><strong>Request Type:</strong></td>
+    <td><%= @ticket.request_type %></td>
+  </tr>
+  <tr>
+    <td><strong>Response Due Date Time:</strong></td>
+    <td><%= @ticket.response_due_date_time %></td>
+  </tr>
+  <tr>
+    <td><strong>Primary Service Area Code:</strong></td>
+    <td><%= @ticket.sacode %></td>
+  </tr>
+  <tr>
+    <td><strong>Additional Service Area Codes:</strong></td>
+    <td><%= @ticket.additional_sacodes %></td>
+  </tr>
+</table>
+
+<h2>Excavator Information</h2>
+<table>
+  <tr>
+    <td><strong>Company Name:</strong></td>
+    <td><%= @excavator.company_name %></td>
+  </tr>
+  <tr>
+    <td><strong>Address:</strong></td>
+    <td><%= @excavator.address %></td>
+  </tr>
+  <tr>
+    <td><strong>Is Crew On Site:</strong></td>
+    <td><%= @excavator.crew_on_site ? 'Yes' : 'No' %></td>
+  </tr>
+</table>
+
+<h2>Digsite Information</h2>
+<p><strong>Map Polygon data:</strong> <%= @map_data[:well_known_text] %></p>
+
+<div id="map" style="height: 500px;"></div>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+  var mapData = <%= raw @map_data[:well_known_text].to_json %>;
+  var map = L.map('map').setView([32.0809, -81.0912], 12);
+  console.log(mapData);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  var polygon = L.geoJSON(parsePolygonData(mapData)).addTo(map);
+  function parsePolygonData(data) {
+    var coordinates = data.slice(9, -2).split(',').map(function(coord) {
+      return coord.trim().split(' ').map(function(lonLat) {
+        return [parseFloat(lonLat.split(' ')[1]), parseFloat(lonLat.split(' ')[0])];
+      });
+    });
+    return {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [coordinates]
+      }
+    };
+  }
+</script>

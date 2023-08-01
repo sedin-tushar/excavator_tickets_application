@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company_name: MyString
+  address: MyText
+  crew_on_site: false
+  ticket: one
+
+two:
+  company_name: MyString
+  address: MyText
+  crew_on_site: false
+  ticket: two
