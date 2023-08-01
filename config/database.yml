@@ -82,8 +82,10 @@ production:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
 
+
 production:
   <<: *default
+  port: 5432
   database: excavator_tickets_app
   username: excavator_tickets_app
   password: tushar@123
