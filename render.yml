@@ -1,59 +1,19 @@
-# render.yaml
+databases:
+  - name: postgres
+    ipAllowList: []
+    databaseName: my_app_render
+    user: my_app_render
 
-# Services
 services:
   - type: web
-    name: app
-    buildCommand: bundle install --path vendor/bundle && rails assets:precompile
-    startCommand: bundle exec rails server -p $PORT
-    healthCheckPath: /
-    healthCheckTimeout: 10
-    httpPort: 3000
-
-# Environment Variables
-env:
-  RAILS_ENV: production
-  RAILS_LOG_TO_STDOUT: enabled
-
-# Routes
-routes:
-  - path: /
-    destination:
-      service: app
-    type: rewrite
-
-# Automatic HTTPS
-automaticHttps:
-  enabled: true
-
-# Build Environment
-build:
-  env:
-    - "BUNDLE_GEMFILE=Gemfile"
-    - "RAILS_ENV=production"
-
-# Optional: Database Configuration
-# Uncomment and customize this section if you are using a database.
-#database:
-#  image: render/postgres
-#  plan: hobby
-
-# Optional: Addons
-# Uncomment and customize this section to add other Render addons like Redis, Memcached, etc.
-#addons:
-#  - plan: hobby
-#    service: render/redis
-
-# Optional: Custom Redirects
-# Uncomment and customize this section to add custom redirects.
-#redirects:
-#  - from: /old-path
-#    to: /new-path
-#    type: 302
-
-# Optional: Custom Headers
-# Uncomment and customize this section to add custom headers.
-#headers:
-#  - path: /*
-#    headers:
-#      X-My-Custom-Header: "Hello World"
+    name: my_app_render
+    env: ruby
+    buildCommand: "./render-build.sh"
+    startCommand: "bundle exec rails s"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: postgres
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
