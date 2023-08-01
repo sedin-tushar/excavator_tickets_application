@@ -83,9 +83,8 @@ production:
   <<: *default
    adapter: postgresql
   encoding: unicode
-  url: postgres://excavator_tickets_app_production:fTPMLJapv1UwzHHodpfKZSgyBvejMMe7@dpg-cj4k83a7l0fkkjjshqf0-a/excavator_tickets_app_production
-  host: dpg-cj4k83a7l0fkkjjshqf0-a
-  port: 5432
-  database: excavator_tickets_app_production
-  username: excavator_tickets_app_production
-  password: fTPMLJapv1UwzHHodpfKZSgyBvejMMe7
+  host: <%= ENV['DB_HOST'] %>
+  port: <%= ENV['DB_PORT'] %>
+  database: <%= ENV['DB_NAME'] %>
+  username: <%= ENV['DB_USERNAME'] %>
+  password: <%= ENV['DB_PASSWORD'] %>
