@@ -23,7 +23,7 @@ default: &default
 
 production:
   <<: *default
-   adapter: postgresql
+  adapter: postgresql
   encoding: unicode
   host: <%= ENV['DB_HOST'] %>
   port: <%= ENV['DB_PORT'] %>
