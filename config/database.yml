@@ -81,10 +81,9 @@ test:
 #
 production:
   adapter: postgresql
-  url: <%= ENV["MY_APP_DATABASE_URL"] %>
   encoding: unicode
   port: 5433
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   database: excavator_tickets_app
   username: excavator_tickets_app
   password: 'tush@r123'
+  host: localhost
