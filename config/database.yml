@@ -83,7 +83,7 @@ production:
   <<: *default
    adapter: postgresql
   encoding: unicode
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: postgres://excavator_tickets_app_production:fTPMLJapv1UwzHHodpfKZSgyBvejMMe7@dpg-cj4k83a7l0fkkjjshqf0-a/excavator_tickets_app_production
   host: dpg-cj4k83a7l0fkkjjshqf0-a
   port: 5432
   database: excavator_tickets_app_production
