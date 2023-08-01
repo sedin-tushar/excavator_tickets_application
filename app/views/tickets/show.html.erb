@@ -39,6 +39,20 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       margin-bottom: 20px;
     }
+
+   .map-table {
+      width: 100%;
+    }
+
+    .map-cell {
+      width: 50%;
+      vertical-align: top;
+    }
+
+    .info-cell {
+      width: 50%;
+      vertical-align: top;
+    }
   </style>
 </head>
 
@@ -88,28 +102,31 @@
 </table>
 
 <h2>Digsite Information</h2>
-<p><strong>Map Polygon data:</strong> <%= @map_data[:well_known_text] %></p>
+<div id="map" style="height: 500px;" data-polygon="<%= raw @map_data[:well_known_text].to_json %>"></div>
 
-<div id="map" style="height: 500px;"></div>
+
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-  var mapData = <%= raw @map_data[:well_known_text].to_json %>;
-  var map = L.map('map').setView([32.0809, -81.0912], 12);
-  console.log(mapData);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-  var polygon = L.geoJSON(parsePolygonData(mapData)).addTo(map);
-  function parsePolygonData(data) {
-    var coordinates = data.slice(9, -2).split(',').map(function(coord) {
-      return coord.trim().split(' ').map(function(lonLat) {
-        return [parseFloat(lonLat.split(' ')[1]), parseFloat(lonLat.split(' ')[0])];
-      });
-    });
-    return {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [coordinates]
-      }
-    };
-  }
+   var mapData = <%= raw @map_data[:well_known_text].to_json %>;
+var map = L.map('map').setView([32.0809, -81.0912], 12);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+L.geoJSON(parsePolygonData(mapData)).addTo(map);
+
+function parsePolygonData(data) {
+  var coordinates = data.slice(9, -2).split(',').map(function(coord) {
+    return [parseFloat(coord.trim().split(' ')[0]), parseFloat(coord.trim().split(' ')[1])];
+  });
+  return {
+    "type": "Feature",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [coordinates]
+    }
+  };
+}
+
+
+parsePolygonData(mapData);
+
 </script>
+

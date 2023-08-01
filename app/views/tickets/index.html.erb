@@ -29,6 +29,14 @@ th a:hover {
 td:first-child {
   padding-left: 20px;
 }
+.primary{
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+}
+.no-underline {
+  text-decoration: none;
+}
 </style>
 </head>
 <h1>Tickets</h1>
@@ -40,15 +48,21 @@ td:first-child {
       <th>Sequence Number</th>
       <th>Request Type</th>
       <th>Primary Service Area Code</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @tickets.each do |ticket| %>
       <tr>
-        <td><%= link_to ticket.request_number, ticket_path(ticket) %></td>
+        <td><%= ticket.request_number%></td>
         <td><%= ticket.sequence_number %></td>
         <td><%= ticket.request_type %></td>
         <td><%= ticket.sacode %></td>
+        <td>
+        <button class="primary">
+          <%= link_to "show", ticket_path(ticket), class: "no-underline" %>
+        </button>
+      </td>
       </tr>
     <% end %>
   </tbody>
