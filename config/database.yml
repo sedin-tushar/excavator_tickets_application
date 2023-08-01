@@ -23,7 +23,8 @@ default: &default
 
 development:
   <<: *default
-  database: excavator_tickets_app
+  database: excavator_tickets_app_development
+
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
@@ -80,12 +81,6 @@ test:
 #
 production:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-
-
-production:
-  <<: *default
-  port: 5432
-  database: excavator_tickets_app
-  username: excavator_tickets_app
+  database: excavator_tickets_app_production
+  username: excavator_tickets_app_production
   password: tushar@123
