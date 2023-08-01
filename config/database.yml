@@ -80,7 +80,10 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: my_app_render_production
-  username: my_app_render
+  adapter: postgresql
+  url: <%= ENV["MY_APP_DATABASE_URL"] %>
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  database: excavator_tickets_app
+  username: excavator_tickets_app
   password: 'tush@r123'
