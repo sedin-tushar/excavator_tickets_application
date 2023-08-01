@@ -81,6 +81,11 @@ test:
 #
 production:
   <<: *default
+   adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: dpg-cj4k83a7l0fkkjjshqf0-a
+  port: 5432
   database: excavator_tickets_app_production
   username: excavator_tickets_app_production
-  password: tushar@123
+  password: fTPMLJapv1UwzHHodpfKZSgyBvejMMe7
