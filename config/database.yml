@@ -14,7 +14,7 @@ test:
   <<: *default
   database: excavator_tickets_app_test
 
-  production:
+production:
   <<: *default
   adapter: postgresql
   encoding: unicode

@@ -11,8 +11,11 @@ class TicketsController < BaseController
 
   def destroy
     @ticket = Ticket.find(params[:id])
-    @ticket.destroy
-    redirect_to tickets_path, notice: 'Ticket was successfully deleted.'
+    if @ticket.destroy
+      redirect_to tickets_path, notice: 'Ticket was successfully deleted.'
+    else
+      redirect_to tickets_path, notice: 'Ticket was not deleted.
+    end
   end
 
 end
